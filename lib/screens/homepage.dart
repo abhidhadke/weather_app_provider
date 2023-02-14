@@ -10,10 +10,13 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
+      // appBar: appBar(),
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -28,18 +31,20 @@ class _HomepageState extends State<Homepage> {
                 children: [
                   Text('City', style: city()),
                   Text('Time', style: time(),),
-                  Text('Temperature', style: temp(),),
+                  Text('Temp', style: temp(),),
                   const Text('-------------------', style: TextStyle(color: Colors.white),),
                   Text('temp descrip', style: description(),),
                   Text('high/low temp', style: smallTemp(),),
                   const Text('------------------------', style: TextStyle(color: Colors.white),),
+
+
 
                 ],
               ),
             ),
           )
         ],
-      )
+      ),
     );
   }
 
