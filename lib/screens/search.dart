@@ -24,9 +24,8 @@ class _SearchState extends State<Search> {
   }
   @override
   Widget build(BuildContext context) {
-    final locProvider = Provider.of<ApiResponse>(context, listen: true);
+    final locProvider = Provider.of<SearchLocation>(context, listen: true);
     debugPrint('build');
-    ApiResponse instance = ApiResponse();
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
@@ -95,7 +94,7 @@ class _SearchState extends State<Search> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Consumer<ApiResponse>(
+                      child: Consumer<SearchLocation>(
                         builder: (context, value, child) {
                           debugPrint('inside consumer');
                           //debugPrint('${value.locData.length}');

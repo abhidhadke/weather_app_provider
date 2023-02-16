@@ -82,7 +82,7 @@ class _MyNavPageState extends State<MyNavPage> with SingleTickerProviderStateMix
           body: (context, controller) => TabBarView(
             controller: tabController,
             dragStartBehavior: DragStartBehavior.down,
-            physics: const BouncingScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             children: const [
              Homepage(),
              Search()
