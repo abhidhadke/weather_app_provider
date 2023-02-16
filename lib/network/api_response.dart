@@ -31,8 +31,21 @@ Future<void> getLoc(String location) async {
   );
   var locRes = await http.get(locUrl);
   List cords = jsonDecode(locRes.body);
-  debugPrint('$cords');
+  //debugPrint('$cords');
   _locData = cords;
+  debugPrint('$_locData');
   notifyListeners();
 }
+
+}
+
+class DateProvider with ChangeNotifier{
+  DateTime _date = DateTime.now();
+  DateTime get date => _date;
+
+  void dateTime(){
+    _date = DateTime.now();
+    notifyListeners();
+  }
+
 }

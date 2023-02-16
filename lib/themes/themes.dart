@@ -24,9 +24,9 @@ TextStyle city(){
 
 TextStyle time(){
   return GoogleFonts.poppins(
-    fontSize: 35,
+    fontSize: 25,
     color: whiteClr,
-    fontWeight: FontWeight.w400
+    fontWeight: FontWeight.w500
 
   );
 }

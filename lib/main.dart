@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ApiResponse()),
+        ChangeNotifierProvider(create: (_) => DateProvider()),
 
       ],
       child: MaterialApp(

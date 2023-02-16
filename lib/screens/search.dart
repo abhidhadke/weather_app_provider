@@ -24,7 +24,9 @@ class _SearchState extends State<Search> {
   }
   @override
   Widget build(BuildContext context) {
-    final locProvider = Provider.of<ApiResponse>(context, listen: false);
+    final locProvider = Provider.of<ApiResponse>(context, listen: true);
+    debugPrint('build');
+    ApiResponse instance = ApiResponse();
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
@@ -72,6 +74,7 @@ class _SearchState extends State<Search> {
                                 ),
                                 onFieldSubmitted: (String? name) async {
                                   debugPrint(name);
+                                 //await instance.getLoc(name!);
                                   locProvider.getLoc(name!);
                                 },
                               )
@@ -81,6 +84,7 @@ class _SearchState extends State<Search> {
                              color: Colors.white70,
                              onPressed: ()async {
                                debugPrint(controller.text);
+                               //await instance.getLoc(controller.text);
                                locProvider.getLoc(controller.text);
                              },)
                         ],
@@ -93,14 +97,24 @@ class _SearchState extends State<Search> {
                       padding: const EdgeInsets.only(left: 15, right: 15),
                       child: Consumer<ApiResponse>(
                         builder: (context, value, child) {
+                          debugPrint('inside consumer');
+                          //debugPrint('${value.locData.length}');
                           return ListView.builder(
                             itemCount: value.locData.length,
                               itemBuilder: (context, index){
                               debugPrint('${value.locData.length}');
                               Map<String,dynamic> cityCard = value.locData[index];
                               return Card(
-                                child: ListTile(
-                                  title: Text(cityCard['name']),
+                                elevation: 2,
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  onTap: (){
+                                    debugPrint('tapped');
+                                  },
+                                  child: ListTile(
+                                    title: Text('${cityCard['name']}, ${cityCard['country']}'),
+                                    subtitle: Text(cityCard['state'] ?? ''),
+                                  ),
                                 ),
                               );
                               }
