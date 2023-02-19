@@ -26,9 +26,12 @@ class _SplashScreenState extends State<SplashScreen> {
     var location = await determinePosition();
     debugPrint('Latitude: ${location.latitude}, Longitude: ${location.longitude}');
     await locProvider.getLocation('${location.latitude}', '${location.longitude}');
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const MyNavPage()));
+    _nextScreen(locProvider.timezone);
 
+  }
 
+  _nextScreen(int timezone){
+    return Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) =>  MyNavPage(timezone: timezone)));
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +19,13 @@ class _HomepageState extends State<Homepage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
+    final dateProvider = Provider.of<DateProvider>(context, listen: false);
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      dateProvider.getTime(widget.timeZone);
+      //debugPrint('${widget.timeZone}');
+    });
 
   }
 
@@ -42,11 +48,18 @@ class _HomepageState extends State<Homepage> {
               width: MediaQuery.of(context).size.width,
               child: Consumer<ApiResponse>(
                 builder: (context, value, child){
+                 // debugPrint('outside consumer');
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text('${value.city}, ${value.country}', style: city()),
-                      Text(DateFormat.yMMMd().add_jm().format(value.date), style: time(),),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text('${value.city}, ${value.country}', style: city(), textAlign: TextAlign.center,),
+                      ),
+                      Consumer<DateProvider>(builder: (context,value,child){
+                        String date = DateFormat.yMMMEd().add_jm().format(value.date);
+                        return Text(date, style: time(),);
+                      }),
                       Text('${value.temp.toString()}°C', style: temp(),),
                       const Text('-------------------', style: TextStyle(color: Colors.white),),
                       Text(value.tempDescp, style: description(),),

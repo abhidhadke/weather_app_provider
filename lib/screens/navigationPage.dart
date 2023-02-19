@@ -1,13 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
-import 'package:weather_app_provider/network/api_response.dart';
 import 'package:weather_app_provider/screens/homepage.dart';
 import 'package:weather_app_provider/screens/search.dart';
 
 
 class MyNavPage extends StatefulWidget {
-  const MyNavPage({Key? key}) : super(key: key);
+  final int timezone;
+  const MyNavPage({Key? key, required this.timezone}) : super(key: key);
 
   @override
   State<MyNavPage> createState() => _MyNavPageState();
@@ -90,7 +90,7 @@ class _MyNavPageState extends State<MyNavPage> with SingleTickerProviderStateMix
             dragStartBehavior: DragStartBehavior.down,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-             Homepage(timeZone: ApiResponse().timezone,),
+             Homepage(timeZone: widget.timezone,),
              const Search()
             ]
           ),

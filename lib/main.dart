@@ -17,9 +17,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SearchLocation()),
-        ChangeNotifierProvider(create: (_) => DateProvider()),
         ChangeNotifierProvider(create: (_) => ApiResponse()),
-
+        ChangeNotifierProvider(create: (_) => DateProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

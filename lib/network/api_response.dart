@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'api.dart';
@@ -38,16 +39,7 @@ Future<void> getLoc(String location) async {
 
 }
 
-class DateProvider with ChangeNotifier{
-  DateTime _date = DateTime.now();
-  DateTime get date => _date;
 
-  void dateTime(){
-    _date = DateTime.now();
-    notifyListeners();
-  }
-
-}
 
 class ApiResponse with ChangeNotifier{
 
@@ -59,7 +51,6 @@ class ApiResponse with ChangeNotifier{
   int _aqi = 0; // Air quality Index
   String _icon = '-'; // Icon of the current weather
   String _country = '-'; // name of the country
-  DateTime _date = DateTime.now();
   String _tempDescp = '-';
   int _timezone = 0;
   String _city = '-';
@@ -77,7 +68,7 @@ class ApiResponse with ChangeNotifier{
   String get tempDescp => _tempDescp;
   String get city => _city;
   String get state => _state;
-  DateTime get date => _date;
+
   int get id => _id;
 
 
@@ -124,14 +115,24 @@ class ApiResponse with ChangeNotifier{
     Map speed = data['wind'];
     _airSpeed = speed['speed'];
 
-    getTime(_timezone);
+    //getTime(_timezone);
 
   }
+
+}
+
+class DateProvider with ChangeNotifier{
+
+  DateTime _date = DateTime.now();
+
+  DateTime get date => _date;
 
   void getTime(int timezone) async {
+    //debugPrint('$timezone');
+
     //getting time of the place
-    _date = DateTime.now().add(Duration(seconds: _timezone - DateTime.now().timeZoneOffset.inSeconds));
+     _date = DateTime.now().add(Duration(seconds: timezone - DateTime.now().timeZoneOffset.inSeconds));
+    //_date = DateFormat.yMMMd().add_jm().format(_Date);
+    notifyListeners();
   }
-
-
 }
