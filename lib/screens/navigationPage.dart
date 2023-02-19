@@ -1,8 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
+import 'package:weather_app_provider/network/api_response.dart';
 import 'package:weather_app_provider/screens/homepage.dart';
 import 'package:weather_app_provider/screens/search.dart';
+
 
 class MyNavPage extends StatefulWidget {
   const MyNavPage({Key? key}) : super(key: key);
@@ -21,6 +23,7 @@ class _MyNavPageState extends State<MyNavPage> with SingleTickerProviderStateMix
   ];
 
 
+
   @override
   void initState() {
     // TODO: implement initState
@@ -34,8 +37,11 @@ class _MyNavPageState extends State<MyNavPage> with SingleTickerProviderStateMix
         }
       },
     );
+
     super.initState();
   }
+
+
 
   void changePage(int newPage) {
     setState(() {
@@ -83,9 +89,9 @@ class _MyNavPageState extends State<MyNavPage> with SingleTickerProviderStateMix
             controller: tabController,
             dragStartBehavior: DragStartBehavior.down,
             physics: const NeverScrollableScrollPhysics(),
-            children: const [
-             Homepage(),
-             Search()
+            children: [
+             Homepage(timeZone: ApiResponse().timezone,),
+             const Search()
             ]
           ),
           child: TabBar(

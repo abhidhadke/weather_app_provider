@@ -52,22 +52,23 @@ class DateProvider with ChangeNotifier{
 class ApiResponse with ChangeNotifier{
 
   String key = api;
-  late double _temp; //temperature of the location
-  late int _humidity; // humidity of the location
-  late double _airSpeed; // Air Speed of the location
-  late String _tempType; // Current Weather type
-  late int _aqi; // Air quality Index
-  late String _icon; // Icon of the current weather
-  late String _country; // name of the country
-  late DateTime _date;
-  late String _tempDescp;
-  late int _timezone;
-  late String _city;
-  late String _state;
-  late int _id;
+  double _temp = 0; //temperature of the location
+   int _humidity = 0; // humidity of the location
+  double _airSpeed = 0; // Air Speed of the location
+  String _tempType = '-'; // Current Weather type
+  int _aqi = 0; // Air quality Index
+  String _icon = '-'; // Icon of the current weather
+  String _country = '-'; // name of the country
+  DateTime _date = DateTime.now();
+  String _tempDescp = '-';
+  int _timezone = 0;
+  String _city = '-';
+  String _state = '-';
+  int _id = 0;
 
   double get temp => _temp;
   int get humidity => _humidity;
+  int get timezone => _timezone;
   double get airSpeed => _airSpeed;
   String get tempType => _tempType;
   int get aqi => _aqi;
@@ -96,26 +97,40 @@ class ApiResponse with ChangeNotifier{
     // getting timezone
     _timezone = data['timezone'];
 
+
+    //getting city
+    _city = data['name'];
+
+    //getting country
+    Map sys = data['sys'];
+    _country = sys['country'];
+
     //getting temp, humidity
     Map mainData = data['main'];
     _temp = mainData['temp'];
     _humidity = mainData['humidity'];
 
+
     // getting temp description, icon
-    List Weather = data['weather'];
-    Map weatherData = Weather[0];
+    List weather = data['weather'];
+    Map weatherData = weather[0];
     _tempType = weatherData['main'];
     _tempDescp = weatherData['description'];
     _icon = weatherData['icon'];
     _id = weatherData['id'];
 
+
     // getting wind speed
     Map speed = data['wind'];
     _airSpeed = speed['speed'];
 
+    getTime(_timezone);
+
+  }
+
+  void getTime(int timezone) async {
     //getting time of the place
     _date = DateTime.now().add(Duration(seconds: _timezone - DateTime.now().timeZoneOffset.inSeconds));
-
   }
 
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app_provider/network/api_response.dart';
-import 'package:weather_app_provider/screens/navigationPage.dart';
+import 'package:weather_app_provider/screens/splashScreen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const MyNavPage()
+        home: const SplashScreen(),
+
       ),
     );
   }

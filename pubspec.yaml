@@ -41,6 +41,8 @@ dependencies:
   intl: ^0.18.0
   flutter_floating_bottom_bar: ^1.1.0
   geolocator: ^9.0.2
+  rive: ^0.10.2
+
 
 dev_dependencies:
   flutter_test:

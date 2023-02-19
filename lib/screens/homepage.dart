@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -6,8 +5,10 @@ import 'package:weather_app_provider/network/api_response.dart';
 import 'package:weather_app_provider/themes/themes.dart';
 
 
+
 class Homepage extends StatefulWidget {
-  const Homepage({Key? key}) : super(key: key);
+  final int timeZone;
+  const Homepage({Key? key, required this.timeZone}) : super(key: key);
 
   @override
   State<Homepage> createState() => _HomepageState();
@@ -15,23 +16,18 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    final dateProvider = Provider.of<DateProvider>(context, listen: false);
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      dateProvider.dateTime();
-      //debugPrint('timer');
-    });
+
   }
+
 
 
 
   @override
   Widget build(BuildContext context) {
-
     debugPrint('build tree');
     return Scaffold(
       // appBar: appBar(),
@@ -44,25 +40,24 @@ class _HomepageState extends State<Homepage> {
           SafeArea(
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('City', style: city()),
-                  Consumer<DateProvider>(
-                      builder: (context,value,child){
-                        //value.dateTime();
-                        String date = DateFormat.yMMMEd().add_jm().format(value.date);
-                        return Text(date, style: time(),);
-                      }),
-                  Text('Temp', style: temp(),),
-                  const Text('-------------------', style: TextStyle(color: Colors.white),),
-                  Text('temp descrip', style: description(),),
-                  Text('high/low temp', style: smallTemp(),),
-                  const Text('------------------------', style: TextStyle(color: Colors.white),),
+              child: Consumer<ApiResponse>(
+                builder: (context, value, child){
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text('${value.city}, ${value.country}', style: city()),
+                      Text(DateFormat.yMMMd().add_jm().format(value.date), style: time(),),
+                      Text('${value.temp.toString()}°C', style: temp(),),
+                      const Text('-------------------', style: TextStyle(color: Colors.white),),
+                      Text(value.tempDescp, style: description(),),
+                      Text('high/low temp', style: smallTemp(),),
+                      const Text('------------------------', style: TextStyle(color: Colors.white),),
 
 
 
-                ],
+                    ],
+                  );
+                },
               ),
             ),
           )
