@@ -49,11 +49,19 @@ TextStyle description(){
   );
 }
 
-TextStyle smallTemp(){
+TextStyle smallTemp() {
   return GoogleFonts.poppins(
     fontSize: 30,
     fontWeight: FontWeight.w600,
     color: whiteClr,
 
+  );
+}
+
+TextStyle bottomText(){
+  return GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+    color: whiteClr
   );
 }

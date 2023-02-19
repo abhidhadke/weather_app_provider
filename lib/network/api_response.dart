@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'api.dart';
@@ -51,12 +50,16 @@ class ApiResponse with ChangeNotifier{
   int _aqi = 0; // Air quality Index
   String _icon = '-'; // Icon of the current weather
   String _country = '-'; // name of the country
+  double _maxTemp = 0;
+  double _minTemp = 0;
   String _tempDescp = '-';
   int _timezone = 0;
   String _city = '-';
   String _state = '-';
   int _id = 0;
 
+  double get maxTemp => _maxTemp;
+  double get minTemp => _minTemp;
   double get temp => _temp;
   int get humidity => _humidity;
   int get timezone => _timezone;
@@ -96,10 +99,12 @@ class ApiResponse with ChangeNotifier{
     Map sys = data['sys'];
     _country = sys['country'];
 
-    //getting temp, humidity
+    //getting temp, humidity,max,min
     Map mainData = data['main'];
     _temp = mainData['temp'];
     _humidity = mainData['humidity'];
+    _minTemp = mainData['temp_min'];
+    _maxTemp = mainData['temp_max'];
 
 
     // getting temp description, icon

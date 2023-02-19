@@ -42,6 +42,7 @@ dependencies:
   flutter_floating_bottom_bar: ^1.1.0
   geolocator: ^9.0.2
   rive: ^0.10.2
+  weather_icons: ^3.0.0
 
 
 dev_dependencies:

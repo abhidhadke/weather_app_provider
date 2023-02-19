@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app_provider/network/api_response.dart';
 import 'package:weather_app_provider/themes/themes.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 
 
@@ -34,7 +35,7 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build tree');
+    //debugPrint('build tree');
     return Scaffold(
       // appBar: appBar(),
       extendBodyBehindAppBar: true,
@@ -52,19 +53,48 @@ class _HomepageState extends State<Homepage> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text('${value.city}, ${value.country}', style: city(), textAlign: TextAlign.center,),
-                      ),
+                       SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                      Text('${value.city}, ${value.country}', style: city(), textAlign: TextAlign.center,softWrap: true, overflow: TextOverflow.visible,),
                       Consumer<DateProvider>(builder: (context,value,child){
                         String date = DateFormat.yMMMEd().add_jm().format(value.date);
                         return Text(date, style: time(),);
                       }),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05,),
                       Text('${value.temp.toString()}°C', style: temp(),),
-                      const Text('-------------------', style: TextStyle(color: Colors.white),),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                      const Text('- - - - - - - - - - - - - - - - - - - - - - - -', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),),
                       Text(value.tempDescp, style: description(),),
-                      Text('high/low temp', style: smallTemp(),),
-                      const Text('------------------------', style: TextStyle(color: Colors.white),),
+                      Text('${value.maxTemp} / ${value.minTemp} °C', style: smallTemp(),),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                      const Text('- - - - - - - - - - - - - - - - - - - - - - - -', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              const BoxedIcon(WeatherIcons.humidity, size: 30, color: Colors.white70,),
+                              Text('${value.humidity}', style: bottomText(),),
+                              Text('%', style: bottomText(),)
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Text('AQI', style: bottomText(),),
+                              Text('${value.aqi}', style: bottomText(),),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              const BoxedIcon(WeatherIcons.windy, size: 30, color: Colors.white70,),
+                              Text('${value.airSpeed}', style: bottomText(),),
+                              Text('km/hr', style: bottomText(),)
+                            ],
+                          )
+
+                        ],
+                      ),
 
 
 
