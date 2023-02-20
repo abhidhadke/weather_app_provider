@@ -75,12 +75,12 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
                         String date = DateFormat.yMMMEd().add_jm().format(value.date);
                         return Text(date, style: time(),);
                       }),
+                      const Spacer(),
                       Lottie.asset(
                         changeIcons(value.icon),
                         fit: BoxFit.fill
                       ),
                       Text('${value.temp.toString()}°C', style: temp(),),
-                      const Spacer(),
                       const Text('- - - - - - - - - - - - - - - - - - - - - - - -', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),),
                       Text(value.tempDescp, style: description(),),
                       Text('${value.maxTemp} / ${value.minTemp} °C', style: smallTemp(),),
