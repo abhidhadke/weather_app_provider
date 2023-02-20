@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app_provider/network/api_response.dart';
+import 'package:weather_app_provider/screens/navigationPage.dart';
 
 
 class Search extends StatefulWidget {
@@ -26,6 +27,7 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     final locProvider = Provider.of<SearchLocation>(context, listen: true);
     debugPrint('build');
+
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
@@ -107,7 +109,12 @@ class _SearchState extends State<Search> {
                                 elevation: 2,
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(10.0),
-                                  onTap: (){
+                                  onTap: () async {
+                                    final newLocation = Provider.of<ApiResponse>(context, listen: false);
+                                    //final newTime = Provider.of<DateProvider>(context, listen: false);
+                                    await newLocation.getLocation(cityCard['lat'].toString(), cityCard['lon'].toString());
+                                    debugPrint('${newLocation.timezone}');
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => MyNavPage(timezone: newLocation.timezone)), (route) => false);
                                     debugPrint('tapped');
                                   },
                                   child: ListTile(

@@ -129,14 +129,16 @@ class ApiResponse with ChangeNotifier{
 class DateProvider with ChangeNotifier{
 
   DateTime _date = DateTime.now();
+  int _timezone = 0;
 
+  int get timezone => _timezone;
   DateTime get date => _date;
 
   void getTime(int timezone) async {
     //debugPrint('$timezone');
-
+    _timezone = timezone;
     //getting time of the place
-     _date = DateTime.now().add(Duration(seconds: timezone - DateTime.now().timeZoneOffset.inSeconds));
+     _date = DateTime.now().add(Duration(seconds: _timezone - DateTime.now().timeZoneOffset.inSeconds));
     //_date = DateFormat.yMMMd().add_jm().format(_Date);
     notifyListeners();
   }
