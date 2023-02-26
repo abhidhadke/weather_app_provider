@@ -15,7 +15,7 @@ TextStyle title(){
 
 TextStyle city(){
   return GoogleFonts.poppins(
-    fontSize: 60,
+    fontSize: 50,
     fontWeight: FontWeight.w400,
     color: whiteClr,
 
@@ -33,7 +33,7 @@ TextStyle time(){
 
 TextStyle temp(){
   return GoogleFonts.poppins(
-    fontSize: 80,
+    fontSize: 70,
     fontWeight: FontWeight.w800,
     color: whiteClr,
 
@@ -42,7 +42,7 @@ TextStyle temp(){
 
 TextStyle description(){
   return GoogleFonts.poppins(
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: FontWeight.w700,
     color: whiteClr,
 
@@ -51,7 +51,7 @@ TextStyle description(){
 
 TextStyle smallTemp() {
   return GoogleFonts.poppins(
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: FontWeight.w600,
     color: whiteClr,
 
@@ -60,7 +60,7 @@ TextStyle smallTemp() {
 
 TextStyle bottomText(){
   return GoogleFonts.poppins(
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: FontWeight.w500,
     color: whiteClr
   );

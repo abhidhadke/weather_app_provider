@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app_provider/network/api_response.dart';
+import 'package:weather_app_provider/screens/components/appBar.dart';
 import 'package:weather_app_provider/screens/navigationPage.dart';
 
 
@@ -21,19 +22,26 @@ class _SearchState extends State<Search> {
     // TODO: implement initState
     super.initState();
     controller.text = '';
-
+    final locProvider = Provider.of<SearchLocation>(context, listen: false);
+    locProvider.locData.clear();
   }
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    final locProvider = Provider.of<SearchLocation>(context, listen: true);
+    final locProvider = Provider.of<SearchLocation>(context, listen: false);
     debugPrint('build');
 
     return Scaffold(
+      appBar: appBar(),
       extendBody: true,
+      extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          Image.asset('assets/rain_day.png', fit: BoxFit.fill, height: double.infinity,width: double.infinity,),
+          Image.asset('assets/wallpapers/day.png', fit: BoxFit.fill, height: double.infinity,width: double.infinity,),
           Container(decoration: const BoxDecoration(color: Colors.black12),),
           SafeArea(
             child: SizedBox(
