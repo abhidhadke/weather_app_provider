@@ -4,63 +4,63 @@ import 'package:google_fonts/google_fonts.dart';
 
 const whiteClr = Color(0xFFC3CDD5);
 
-TextStyle title(){
+TextStyle  title(double size){
   return GoogleFonts.poppins(
-    fontSize: 30,
+    fontSize: size,
     color: whiteClr,
     fontWeight: FontWeight.w600
   );
 }
 
 
-TextStyle city(){
+TextStyle city(double size){
   return GoogleFonts.poppins(
-    fontSize: 50,
+    fontSize: size,
     fontWeight: FontWeight.w400,
     color: whiteClr,
 
 );
 }
 
-TextStyle time(){
+TextStyle time(double size){
   return GoogleFonts.poppins(
-    fontSize: 25,
+    fontSize: size,
     color: whiteClr,
     fontWeight: FontWeight.w500
 
   );
 }
 
-TextStyle temp(){
+TextStyle temp(double size){
   return GoogleFonts.poppins(
-    fontSize: 70,
+    fontSize: size,
     fontWeight: FontWeight.w800,
     color: whiteClr,
 
   );
 }
 
-TextStyle description(){
+TextStyle description(double size){
   return GoogleFonts.poppins(
-    fontSize: 25,
+    fontSize: size,
     fontWeight: FontWeight.w700,
     color: whiteClr,
 
   );
 }
 
-TextStyle smallTemp() {
+TextStyle smallTemp(double size) {
   return GoogleFonts.poppins(
-    fontSize: 25,
+    fontSize: size,
     fontWeight: FontWeight.w600,
     color: whiteClr,
 
   );
 }
 
-TextStyle bottomText(){
+TextStyle bottomText(double size){
   return GoogleFonts.poppins(
-    fontSize: 15,
+    fontSize: size,
     fontWeight: FontWeight.w500,
     color: whiteClr
   );

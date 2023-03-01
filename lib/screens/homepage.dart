@@ -52,8 +52,9 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     //debugPrint('build tree');
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: appBar(),
+      appBar: appBar(size),
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -67,62 +68,70 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
               child: Consumer<ApiResponse>(
                 builder: (context, value, child){
                  // debugPrint('outside consumer');
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                       SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-                      Text('${value.city}, ${value.country}', style: city(), textAlign: TextAlign.center,maxLines: 2, overflow: TextOverflow.ellipsis,),
-                      Consumer<DateProvider>(builder: (context,value,child){
-                        String date = DateFormat.yMMMEd().add_jm().format(value.date);
-                        return Text(date, style: time(),);
-                      }),
-                      const Spacer(),
-                      Lottie.asset(
-                        changeIcons(value.icon),
-                        fit: BoxFit.fill
-                      ),
-                      Text('${value.temp.toString()}°C', style: temp(),),
-                      const Text('- - - - - - - - - - - - - - - - - - - - - - - -', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),),
-                      Text(value.tempDescp, style: description(),),
-                      Text('${value.maxTemp} / ${value.minTemp} °C', style: smallTemp(),),
-                      SizedBox(height: MediaQuery.of(context).size.height*0.01,),
-                      const Text('- - - - - - - - - - - - - - - - - - - - - - - -', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),),
-                      SizedBox(height: MediaQuery.of(context).size.height*0.01,),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const BoxedIcon(WeatherIcons.humidity, size: 25, color: whiteClr,),
-                              Text('${value.humidity}', style: bottomText(),),
-                              Text('%', style: bottomText(),)
-                            ],
+                  //debugPrint(value.icon);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                         //SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                        Text('${value.city}, ${value.country}', style: city(size.width*0.12), textAlign: TextAlign.center,maxLines: 2, overflow: TextOverflow.ellipsis, softWrap: true,),
+                        Consumer<DateProvider>(builder: (context,value,child){
+                          String date = DateFormat.yMMMEd().add_jm().format(value.date);
+                          return Text(date, style: time(size.width*0.07),);
+                        }),
+                        const Spacer(),
+                        SizedBox(
+                          height: size.width*0.2,
+                          child: Lottie.asset(
+                            changeIcons(value.icon),
+                            fit: BoxFit.fill
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('AQI', style: bottomText(),),
-                              Text('${value.aqi}', style: bottomText(),),
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const BoxedIcon(WeatherIcons.windy, size: 25, color: whiteClr,),
-                              Text('${value.airSpeed}', style: bottomText(),),
-                              Text('m/s', style: bottomText(),)
-                            ],
-                          )
+                        ),
+                        Text('${value.temp.toString()}°C', style: temp(size.width*0.17),),
+                         Text('- - - - - - - - - - - - - - - - - - - - - - - -', style: TextStyle(color: Colors.white, fontSize: size.width*0.052, fontWeight: FontWeight.w600),),
+                        Text(value.tempDescp, style: description(size.width*0.07),),
+                        Text('${value.maxTemp} / ${value.minTemp} °C', style: smallTemp(size.width*0.07),),
+                        SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                         Text('- - - - - - - - - - - - - - - - - - - - - - - -', style: TextStyle(color: Colors.white, fontSize: size.width*0.052, fontWeight: FontWeight.w600),),
+                        SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                 BoxedIcon(WeatherIcons.humidity, size: size.width*0.06, color: whiteClr,),
+                                Text('${value.humidity}', style: bottomText(size.width*0.05),),
+                                Text('%', style: bottomText(size.width*0.05),)
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('AQI', style: bottomText(size.width*0.06),),
+                                Text('${value.aqi}', style: bottomText(size.width*0.06),),
+                                 SizedBox(height: size.width*0.07,),
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                 BoxedIcon(WeatherIcons.windy, size: size.width*0.06, color: whiteClr,),
+                                Text('${value.airSpeed}', style: bottomText(size.width*0.05),),
+                                Text('m/s', style: bottomText(size.width*0.05),)
+                              ],
+                            )
 
-                        ],
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height*0.07,)
+                          ],
+                        ),
+                        SizedBox(height: MediaQuery.of(context).size.height*0.07,)
 
 
 
-                    ],
+                      ],
+                    ),
                   );
                 },
               ),

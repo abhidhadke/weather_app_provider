@@ -33,9 +33,9 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     final locProvider = Provider.of<SearchLocation>(context, listen: false);
     debugPrint('build');
-
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: appBar(),
+      appBar: appBar(size),
       extendBody: true,
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
@@ -57,7 +57,7 @@ class _SearchState extends State<Search> {
                       decoration: BoxDecoration(
                         color: Colors.black54,
                           border: Border.all(
-                            color: Colors.black54,
+                            color: Colors.transparent,
                             width: 0.5,
                           ),
                           borderRadius: BorderRadius.circular(25)
@@ -66,8 +66,7 @@ class _SearchState extends State<Search> {
                         children: [
                           Expanded(
                               child: TextFormField(
-
-                                autofocus: false,
+                                autofocus: true,
                                 controller: controller,
                                 style: GoogleFonts.poppins(
                                   color: Colors.white70
@@ -114,6 +113,7 @@ class _SearchState extends State<Search> {
                               debugPrint('${value.locData.length}');
                               Map<String,dynamic> cityCard = value.locData[index];
                               return Card(
+                                //color: const Color(0xffdbdc54),
                                 elevation: 2,
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(10.0),
@@ -122,12 +122,12 @@ class _SearchState extends State<Search> {
                                     //final newTime = Provider.of<DateProvider>(context, listen: false);
                                     await newLocation.getLocation(cityCard['lat'].toString(), cityCard['lon'].toString());
                                     debugPrint('${newLocation.timezone}');
-                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => MyNavPage(timezone: newLocation.timezone)), (route) => false);
+                                    _pushtoNewScreen(newLocation.timezone);
                                     debugPrint('tapped');
                                   },
                                   child: ListTile(
-                                    title: Text('${cityCard['name']}, ${cityCard['country']}'),
-                                    subtitle: Text(cityCard['state'] ?? ''),
+                                    title: Text('${cityCard['name']}, ${cityCard['country']}', style: GoogleFonts.poppins(fontSize: size.width*0.05),),
+                                    subtitle: Text(cityCard['state'] ?? '', style: GoogleFonts.poppins(fontSize: size.width*0.038),),
                                   ),
                                 ),
                               );
@@ -144,5 +144,8 @@ class _SearchState extends State<Search> {
         ],
       ),
     );
+  }
+  _pushtoNewScreen(int timezone){
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => MyNavPage(timezone: timezone)), (route) => false);
   }
 }

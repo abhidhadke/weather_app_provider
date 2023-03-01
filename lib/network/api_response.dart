@@ -58,6 +58,7 @@ class ApiResponse with ChangeNotifier{
   String _state = '-';
   int _id = 0;
 
+
   double get maxTemp => _maxTemp;
   double get minTemp => _minTemp;
   double get temp => _temp;
@@ -120,7 +121,14 @@ class ApiResponse with ChangeNotifier{
     Map speed = data['wind'];
     _airSpeed = speed['speed'];
 
-    //getTime(_timezone);
+    //getting aqi
+    var aqiUrl = Uri.https(uri,
+    '/data/2.5/air_pollution',
+    {
+    'lat' : latitude,
+    'lon' : longitude,
+    'appid' : key,
+    });
 
   }
 
