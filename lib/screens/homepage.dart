@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app_provider/network/api_response.dart';
@@ -7,7 +8,6 @@ import 'package:weather_app_provider/screens/components/changeIcons.dart';
 import 'package:weather_app_provider/themes/themes.dart';
 import 'package:weather_icons/weather_icons.dart';
 import 'package:lottie/lottie.dart';
-
 import 'components/appBar.dart';
 
 
@@ -21,13 +21,44 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
   bool isCancel = false;
+  BannerAd? _bannerAd;
+  //bool _isLoaded = false;
 
+  //TODO: change this Id to my ID
+  final adUnitId = 'ca-app-pub-3940256099942544/2934735716';
+
+  //loads ad
+  void loadAd() {
+    _bannerAd = BannerAd(
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        // Called when an ad is successfully received.
+        onAdLoaded: (ad) {
+          debugPrint('Ad loaded.');
+        },
+        // Called when an ad request failed.
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('BannerAd failed to load: $err');
+          // Dispose the ad here to free resources.
+          ad.dispose();
+        },
+        // Called when an ad opens an overlay that covers the screen.
+        onAdOpened: (Ad ad) {},
+        // Called when an ad removes an overlay that covers the screen.
+        onAdClosed: (Ad ad) {},
+        // Called when an impression occurs on the ad.
+        onAdImpression: (Ad ad) {},
+      ),
+    )..load();
+  }
 
 
   @override
   void initState() {
 
-    super.initState();
+    loadAd();
     final dateProvider = Provider.of<DateProvider>(context, listen: false);
     Timer.periodic(const Duration(seconds: 1), (timer) {
       dateProvider.getTime(widget.timeZone);
@@ -37,12 +68,15 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
       }
       //debugPrint('${widget.timeZone}');
     });
+    super.initState();
+
 
   }
 
   @override
   void dispose() {
     isCancel = true;
+    _bannerAd?.dispose();
     super.dispose();
   }
 
@@ -74,7 +108,12 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                         //SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                         SizedBox(
+                           width: _bannerAd!.size.width.toDouble(),
+                           height: _bannerAd!.size.height.toDouble(),
+                           child: AdWidget(
+                               ad: _bannerAd!),
+                         ),
                         Text('${value.city}, ${value.country}', style: city(size.width*0.12), textAlign: TextAlign.center,maxLines: 2, overflow: TextOverflow.ellipsis, softWrap: true,),
                         Consumer<DateProvider>(builder: (context,value,child){
                           String date = DateFormat.yMMMEd().add_jm().format(value.date);
