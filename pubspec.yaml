@@ -44,6 +44,7 @@ dependencies:
   rive: ^0.10.2
   weather_icons: ^3.0.0
   lottie: ^2.2.0
+  google_mobile_ads: ^2.3.0
 
 
 dev_dependencies:
