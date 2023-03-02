@@ -16,7 +16,7 @@ TextStyle  title(double size){
 TextStyle city(double size){
   return GoogleFonts.poppins(
     fontSize: size,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w500,
     color: whiteClr,
 
 );

@@ -114,7 +114,7 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
                            child: AdWidget(
                                ad: _bannerAd!),
                          ),
-                        Text('${value.city}, ${value.country}', style: city(size.width*0.12), textAlign: TextAlign.center,maxLines: 2, overflow: TextOverflow.ellipsis, softWrap: true,),
+                        Text('${value.city}, ${value.country}', style: city(size.width*0.11), textAlign: TextAlign.center,maxLines: 2, overflow: TextOverflow.ellipsis, softWrap: true,),
                         Consumer<DateProvider>(builder: (context,value,child){
                           String date = DateFormat.yMMMEd().add_jm().format(value.date);
                           return Text(date, style: time(size.width*0.07),);
