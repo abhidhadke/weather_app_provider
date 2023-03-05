@@ -4,6 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app_provider/network/api_response.dart';
+import 'package:weather_app_provider/screens/components/changeBG.dart';
 import 'package:weather_app_provider/screens/components/changeIcons.dart';
 import 'package:weather_app_provider/themes/themes.dart';
 import 'package:weather_icons/weather_icons.dart';
@@ -94,7 +95,10 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
       body: Stack(
         children: [
           //
-          Image.asset('assets/wallpapers/day.png', fit: BoxFit.fill, height: double.infinity,width: double.infinity,),
+          Consumer<ApiResponse>(builder: (context, value, child){
+            return Image.asset(changeBg(value.id, value.icon), fit: BoxFit.fill, height: double.infinity,width: double.infinity,);
+
+          }),
           Container(decoration: const BoxDecoration(color: Colors.black12),),
           SafeArea(
             child: SizedBox(

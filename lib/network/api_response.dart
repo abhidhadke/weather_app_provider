@@ -19,21 +19,26 @@ void setLoading(bool value){
 }
 
 Future<void> getLoc(String location) async {
-  String uri = 'api.openweathermap.org';
-  var locUrl = Uri.https(uri,
-    '/geo/1.0/direct',
-    {
-      'q' : location,
-      'limit' : '10',
-      'appid' : key
-    }
-  );
-  var locRes = await http.get(locUrl);
-  List cords = jsonDecode(locRes.body);
-  //debugPrint('$cords');
-  _locData = cords;
-  debugPrint('$_locData');
-  notifyListeners();
+  try{
+    String uri = 'api.openweathermap.org';
+    var locUrl = Uri.https(uri,
+        '/geo/1.0/direct',
+        {
+          'q' : location,
+          'limit' : '10',
+          'appid' : key
+        }
+    );
+    var locRes = await http.get(locUrl);
+    List cords = jsonDecode(locRes.body);
+    //debugPrint('$cords');
+    _locData = cords;
+    debugPrint('$_locData');
+    notifyListeners();
+  }catch(e){
+    debugPrint('$e');
+  }
+
 }
 
 }
@@ -72,22 +77,25 @@ class ApiResponse with ChangeNotifier{
   String get tempDescp => _tempDescp;
   String get city => _city;
   String get state => _state;
-
   int get id => _id;
 
 
   Future<void> getLocation(String latitude, String longitude) async {
-    String uri = 'api.openweathermap.org';
-    var locUrl = Uri.https(uri,
-        '/data/2.5/weather',
-        {
-          'lat' : latitude,
-          'lon' : longitude,
-          'appid' : key,
-          'units' : 'metric'
-        }
-    );
+    try{
+      String uri = 'api.openweathermap.org';
+      var locUrl = Uri.https(uri,
+          '/data/2.5/weather',
+          {
+            'lat' : latitude,
+            'lon' : longitude,
+            'appid' : key,
+            'units' : 'metric'
+          }
+      );
+
+
     var response = await http.get(locUrl);
+
     Map data = jsonDecode(response.body);
     // getting timezone
     _timezone = data['timezone'];
@@ -129,6 +137,10 @@ class ApiResponse with ChangeNotifier{
     'lon' : longitude,
     'appid' : key,
     });
+
+    }catch(e){
+      debugPrint('$e');
+    }
 
   }
 

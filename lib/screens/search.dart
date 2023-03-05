@@ -6,6 +6,8 @@ import 'package:weather_app_provider/network/api_response.dart';
 import 'package:weather_app_provider/screens/components/appBar.dart';
 import 'package:weather_app_provider/screens/navigationPage.dart';
 
+import 'components/changeBG.dart';
+
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
 
@@ -65,7 +67,8 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    final locProvider = Provider.of<SearchLocation>(context, listen: false);
+    final searchProvider = Provider.of<SearchLocation>(context, listen: false);
+    final locProvider = Provider.of<ApiResponse>(context, listen: false);
     debugPrint('build');
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -76,7 +79,7 @@ class _SearchState extends State<Search> {
       body: Stack(
         children: [
           Image.asset(
-            'assets/wallpapers/day.png',
+            changeBg(locProvider.id, locProvider.icon),
             fit: BoxFit.fill,
             height: double.infinity,
             width: double.infinity,
@@ -126,7 +129,7 @@ class _SearchState extends State<Search> {
                             onFieldSubmitted: (String? name) async {
                               debugPrint(name);
                               //await instance.getLoc(name!);
-                              locProvider.getLoc(name!);
+                              searchProvider.getLoc(name!);
                             },
                           )),
                           IconButton(
@@ -135,7 +138,7 @@ class _SearchState extends State<Search> {
                             onPressed: () async {
                               debugPrint(controller.text);
                               //await instance.getLoc(controller.text);
-                              locProvider.getLoc(controller.text);
+                              searchProvider.getLoc(controller.text);
                             },
                           )
                         ],
