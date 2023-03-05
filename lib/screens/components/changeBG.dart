@@ -2,7 +2,6 @@
 changeBg(int id, String icon){
   bool isDayTime = icon[2].startsWith('d');
   String rain = isDayTime ? 'rain_day.png' : 'rain_night.png';
-  //String haze = isDayTime ? 'smoke_day.png' : 'smoke_night.png';
   String clear = isDayTime ? 'clear_day.png' : 'clear_night.png';
   String cloud = isDayTime ? 'cloud_day.png' : 'cloud_night.png';
   String mist = isDayTime ? 'smoke_day.png' : 'smoke_night.png';

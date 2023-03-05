@@ -60,7 +60,6 @@ class _SearchState extends State<Search> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _bannerAd?.dispose();
     super.dispose();
   }
