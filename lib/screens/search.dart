@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:weather_app_provider/network/api_response.dart';
 import 'package:weather_app_provider/screens/components/appBar.dart';
 import 'package:weather_app_provider/screens/navigationPage.dart';
-
 import 'components/changeBG.dart';
 
 class Search extends StatefulWidget {
