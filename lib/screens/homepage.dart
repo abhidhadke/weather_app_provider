@@ -155,7 +155,7 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
                               children: [
                                 Text('AQI', style: bottomText(size.width*0.06),),
                                 Text('${value.aqi}', style: bottomText(size.width*0.06),),
-                                 SizedBox(height: size.width*0.07,),
+                                Text(value.aqiDesc, style: bottomText(size.width*0.04),)
                               ],
                             ),
                             Column(
@@ -169,7 +169,7 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
 
                           ],
                         ),
-                        SizedBox(height: MediaQuery.of(context).size.height*0.07,)
+                        SizedBox(height: MediaQuery.of(context).size.height*0.076,)
 
 
 

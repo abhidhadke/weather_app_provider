@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'api.dart';
+import 'aqi.dart';
 
 
 class SearchLocation with ChangeNotifier{
@@ -60,8 +61,11 @@ class ApiResponse with ChangeNotifier{
   String _tempDescp = '-';
   int _timezone = 0;
   String _city = '-';
-  String _state = '-';
   int _id = 0;
+  double _o3 = 0;
+  double _pm25 = 0;
+  double _co = 0;
+  String _aqiDesc = '';
 
 
   double get maxTemp => _maxTemp;
@@ -76,8 +80,8 @@ class ApiResponse with ChangeNotifier{
   String get country => _country;
   String get tempDescp => _tempDescp;
   String get city => _city;
-  String get state => _state;
   int get id => _id;
+  String get aqiDesc => _aqiDesc;
 
 
   Future<void> getLocation(String latitude, String longitude) async {
@@ -137,6 +141,22 @@ class ApiResponse with ChangeNotifier{
     'lon' : longitude,
     'appid' : key,
     });
+    var aqiRes = await http.get(aqiUrl);
+
+    Map mainAqiData = jsonDecode(aqiRes.body);
+    List innerData = mainAqiData['list'];
+    Map lists = innerData[0];
+    Map components = lists['components'];
+    _o3 = components['o3'];
+    _pm25 = components['pm2_5'];
+    _co = components['co'];
+    _o3 = _o3*0.001;
+    _pm25 = _pm25*0.001;
+    _co = _co*0.001;
+
+    _aqi = getAqi(_o3, _pm25, _co);
+    _aqiDesc = getAqiDesc(_aqi);
+
 
     }catch(e){
       debugPrint('$e');
