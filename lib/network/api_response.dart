@@ -131,7 +131,7 @@ class ApiResponse with ChangeNotifier{
 
     // getting wind speed
     Map speed = data['wind'];
-    _airSpeed = speed['speed'];
+    _airSpeed = speed['speed'].toDouble();
 
     //getting aqi
     var aqiUrl = Uri.https(uri,
@@ -157,8 +157,8 @@ class ApiResponse with ChangeNotifier{
     _aqiDesc = getAqiDesc(_aqi);
 
 
-    }catch(e){
-      debugPrint('$e');
+    }catch(e, s){
+      debugPrint('$e ,\n$s');
     }
 
   }
