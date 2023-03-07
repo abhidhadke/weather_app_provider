@@ -150,7 +150,7 @@ class ApiResponse with ChangeNotifier{
     _o3 = components['o3'];
     _pm25 = components['pm2_5'];
     _co = components['co'];
-    _o3 = _o3*0.00051;
+    _o3 = _o3*0.510;
     _co = _co*0.000873;
 
     _aqi = getAqi(_o3, _pm25, _co);
