@@ -169,7 +169,7 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
 
                           ],
                         ),
-                        SizedBox(height: MediaQuery.of(context).size.height*0.076,)
+                        SizedBox(height: MediaQuery.of(context).size.height*0.078,)
 
 
 
