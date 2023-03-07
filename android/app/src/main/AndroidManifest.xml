@@ -8,7 +8,7 @@
    <application
         android:label="weather_app_provider"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/weather_app">
         <activity
             android:name=".MainActivity"
             android:exported="true"
