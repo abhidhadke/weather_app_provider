@@ -112,12 +112,12 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                         SizedBox(
-                           width: _bannerAd!.size.width.toDouble(),
-                           height: _bannerAd!.size.height.toDouble(),
-                           child: AdWidget(
-                               ad: _bannerAd!),
-                         ),
+                         // SizedBox(
+                         //   width: _bannerAd!.size.width.toDouble(),
+                         //   height: _bannerAd!.size.height.toDouble(),
+                         //   child: AdWidget(
+                         //       ad: _bannerAd!),
+                         // ),
                         Text('${value.city}, ${value.country}', style: city(size.width*0.11), textAlign: TextAlign.center,maxLines: 2, overflow: TextOverflow.ellipsis, softWrap: true,),
                         Consumer<DateProvider>(builder: (context,value,child){
                           String date = DateFormat.yMMMEd().add_jm().format(value.date);
