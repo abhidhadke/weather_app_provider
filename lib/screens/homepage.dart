@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app_provider/constants.dart';
 import 'package:weather_app_provider/network/api_response.dart';
 import 'package:weather_app_provider/screens/components/changeBG.dart';
 import 'package:weather_app_provider/screens/components/changeIcons.dart';
@@ -25,13 +26,12 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
   BannerAd? _bannerAd;
   //bool _isLoaded = false;
 
-  //TODO: change this Id to my ID
-  final adUnitId = 'ca-app-pub-3940256099942544/2934735716';
+
 
   //loads ad
   void loadAd() {
     _bannerAd = BannerAd(
-      adUnitId: adUnitId,
+      adUnitId: homeAdId,
       request: const AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(

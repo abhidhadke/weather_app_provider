@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app_provider/constants.dart';
 import 'package:weather_app_provider/network/api_response.dart';
 import 'package:weather_app_provider/screens/components/appBar.dart';
 import 'package:weather_app_provider/screens/navigationPage.dart';
@@ -18,12 +19,11 @@ class _SearchState extends State<Search> {
   TextEditingController controller = TextEditingController();
   BannerAd? _bannerAd;
 
-  //TODO: change this Id to my ID
-  final adUnitId = 'ca-app-pub-3940256099942544/2934735716';
+
 
   void loadAd() {
     _bannerAd = BannerAd(
-      adUnitId: adUnitId,
+      adUnitId: searchAdId,
       request: const AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(

@@ -45,3 +45,6 @@ app.*.map.json
 
 # api key
 /lib/network/api.dart
+
+#adId
+/lib/constants.dart
