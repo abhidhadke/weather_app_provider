@@ -187,7 +187,7 @@ getAqi(var o3, var pm25,var co){
   }
   aqiv = max(aqiv, coIndex);
 
-  return aqiv.toInt();
+  return aqiv.round();
 }
 
 getAqiDesc(int aqi){
