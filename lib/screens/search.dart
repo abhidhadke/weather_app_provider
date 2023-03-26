@@ -98,8 +98,7 @@ class _SearchState extends State<Search> {
                       child: AdWidget(ad: _bannerAd!),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
+                      padding: const EdgeInsets.only(top: 20, left:10 ,right: 10),
                       child: Container(
                         margin: const EdgeInsets.only(top: 8),
                         padding: const EdgeInsets.only(left: 14, right: 14),

@@ -43,7 +43,6 @@ class AndroidSmall extends StatelessWidget {
                   height: size.height * 1.1,
                   child: Consumer<ApiResponse>(
                     builder: (context, value, child){
-
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Column(
@@ -107,7 +106,7 @@ class AndroidSmall extends StatelessWidget {
 
                               ],
                             ),
-                            SizedBox(height: size.height*0.078,)
+                            SizedBox(height: size.height*0.1,)
 
 
 

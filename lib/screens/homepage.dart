@@ -87,14 +87,14 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
     Size size = MediaQuery.of(context).size;
    // debugPrint('${size.width}');
     return LayoutBuilder(builder: (context, constraint){
-      debugPrint('${constraint.maxWidth}');
-      if(constraint.maxWidth >= 300 && constraint.maxWidth < 600){
+      debugPrint('${constraint.maxHeight}');
+      if(constraint.maxHeight >= 600 && constraint.maxHeight < 900){
         return AndroidMedium(size: size, bannerAd: _bannerAd,);
       }
-      else if(constraint.maxWidth < 300){
+      else if(constraint.maxHeight < 600){
         return AndroidSmall(size: size, bannerAd: _bannerAd,);
       }
-      else if(constraint.maxWidth >= 600){
+      else if(constraint.maxHeight >= 900){
         return AndroidLarge(size: size, bannerAd: _bannerAd,);
       }
       else{
