@@ -4,6 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app_provider/constants.dart';
 import 'package:weather_app_provider/network/api_response.dart';
+import 'package:weather_app_provider/screens/components/interstitial_ad.dart';
 import 'package:weather_app_provider/screens/screen_sizes/large.dart';
 import 'package:weather_app_provider/screens/screen_sizes/medium.dart';
 import 'package:weather_app_provider/screens/screen_sizes/small.dart';
@@ -56,6 +57,7 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
   @override
   void initState() {
 
+    loadInterstitialAd();
     loadAd();
     final dateProvider = Provider.of<DateProvider>(context, listen: false);
     Timer.periodic(const Duration(seconds: 1), (timer) {

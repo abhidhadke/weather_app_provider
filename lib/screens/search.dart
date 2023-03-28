@@ -7,6 +7,7 @@ import 'package:weather_app_provider/network/api_response.dart';
 import 'package:weather_app_provider/screens/components/appBar.dart';
 import 'package:weather_app_provider/screens/navigationPage.dart';
 import 'components/changeBG.dart';
+import 'components/interstitial_ad.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -189,6 +190,7 @@ class _SearchState extends State<Search> {
                                                 .toString());
                                         if (res == 1) {
                                           value.setLoading(false);
+                                          await interstitialAd?.show();
                                           _pushtoNewScreen(
                                               newLocation.timezone);
                                         } else {
