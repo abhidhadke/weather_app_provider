@@ -73,6 +73,7 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    debugPrint('Disposed homepage');
     isCancel = true;
     _bannerAd?.dispose();
     super.dispose();
@@ -88,10 +89,10 @@ class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
    // debugPrint('${size.width}');
     return LayoutBuilder(builder: (context, constraint){
       debugPrint('${constraint.maxHeight}');
-      if(constraint.maxHeight >= 600 && constraint.maxHeight < 900){
+      if(constraint.maxHeight >= 750 && constraint.maxHeight < 900){
         return AndroidMedium(size: size, bannerAd: _bannerAd,);
       }
-      else if(constraint.maxHeight < 600){
+      else if(constraint.maxHeight < 750){
         return AndroidSmall(size: size, bannerAd: _bannerAd,);
       }
       else if(constraint.maxHeight >= 900){

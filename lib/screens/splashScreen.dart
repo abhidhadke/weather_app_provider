@@ -22,11 +22,21 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> determineLocation() async {
-    final locProvider = Provider.of<ApiResponse>(context, listen: false);
-    var location = await determinePosition();
-    debugPrint('Latitude: ${location.latitude}, Longitude: ${location.longitude}');
-    await locProvider.getLocation('${location.latitude}', '${location.longitude}');
-    _nextScreen(locProvider.timezone);
+    try{
+      final locProvider = Provider.of<ApiResponse>(context, listen: false);
+      var location = await determinePosition();
+      debugPrint('Latitude: ${location.latitude}, Longitude: ${location.longitude}');
+      int res = await locProvider.getLocation('${location.latitude}', '${location.longitude}');
+      if(res==1){
+        _nextScreen(locProvider.timezone);
+      }else{
+        Future.delayed(const Duration(seconds: 2),() async {
+          await determineLocation();
+        });
+      }
+    }catch(e){
+      debugPrint('$e');
+    }
 
   }
 

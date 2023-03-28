@@ -18,8 +18,7 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   TextEditingController controller = TextEditingController();
   BannerAd? _bannerAd;
-
-
+  bool isLoading = false;
 
   void loadAd() {
     _bannerAd = BannerAd(
@@ -49,7 +48,6 @@ class _SearchState extends State<Search> {
 
   @override
   void initState() {
-
     loadAd();
     super.initState();
     controller.text = '';
@@ -59,6 +57,7 @@ class _SearchState extends State<Search> {
 
   @override
   void dispose() {
+    debugPrint('Disposed search page');
     _bannerAd?.dispose();
     super.dispose();
   }
@@ -98,7 +97,8 @@ class _SearchState extends State<Search> {
                       child: AdWidget(ad: _bannerAd!),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20, left:10 ,right: 10),
+                      padding:
+                          const EdgeInsets.only(top: 20, left: 10, right: 10),
                       child: Container(
                         margin: const EdgeInsets.only(top: 8),
                         padding: const EdgeInsets.only(left: 14, right: 14),
@@ -123,7 +123,7 @@ class _SearchState extends State<Search> {
                               decoration: InputDecoration(
                                 hintText: 'search city',
                                 hintStyle: GoogleFonts.poppins(
-                                  fontSize: size.height * 0.02,
+                                    fontSize: size.height * 0.02,
                                     color: Colors.white54,
                                     fontStyle: FontStyle.italic),
                                 focusedBorder: InputBorder.none,
@@ -157,42 +157,56 @@ class _SearchState extends State<Search> {
                         padding: const EdgeInsets.only(left: 15, right: 15),
                         child: Consumer<SearchLocation>(
                           builder: (context, value, child) {
-                            debugPrint('inside consumer');
-                            //debugPrint('${value.locData.length}');
-                            return ListView.builder(
-                              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
+                            return value.listLoading
+                                ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                                : ListView.builder(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 20),
                                 itemCount: value.locData.length,
                                 itemBuilder: (context, index) {
                                   debugPrint('${value.locData.length}');
                                   Map<String, dynamic> cityCard =
-                                      value.locData[index];
+                                  value.locData[index];
                                   return Card(
                                     //color: const Color(0xffdbdc54),
                                     elevation: 2,
                                     child: InkWell(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderRadius:
+                                      BorderRadius.circular(10.0),
                                       onTap: () async {
+                                        value.setLoading(true);
                                         final newLocation =
-                                            Provider.of<ApiResponse>(context,
-                                                listen: false);
-                                        //final newTime = Provider.of<DateProvider>(context, listen: false);
+                                        Provider.of<ApiResponse>(
+                                            context,
+                                            listen: false);
+                                        int res =
                                         await newLocation.getLocation(
-                                            cityCard['lat'].toString(),
-                                            cityCard['lon'].toString());
-                                        debugPrint('${newLocation.timezone}');
-                                        _pushtoNewScreen(newLocation.timezone);
-                                        debugPrint('tapped');
+                                            cityCard['lat']
+                                                .toString(),
+                                            cityCard['lon']
+                                                .toString());
+                                        if (res == 1) {
+                                          value.setLoading(false);
+                                          _pushtoNewScreen(
+                                              newLocation.timezone);
+                                        } else {
+                                          value.setLoading(false);
+                                        }
                                       },
                                       child: ListTile(
                                         title: Text(
                                           '${cityCard['name']}, ${cityCard['country']}',
                                           style: GoogleFonts.poppins(
-                                              fontSize: size.width * 0.05),
+                                              fontSize:
+                                              size.width * 0.05),
                                         ),
                                         subtitle: Text(
                                           cityCard['state'] ?? '',
                                           style: GoogleFonts.poppins(
-                                              fontSize: size.width * 0.038),
+                                              fontSize:
+                                              size.width * 0.038),
                                         ),
                                       ),
                                     ),
@@ -206,7 +220,23 @@ class _SearchState extends State<Search> {
                 ),
               ),
             ),
-          )
+          ),
+          Consumer<SearchLocation>(builder: (context, value, child) {
+            return Visibility(
+              visible: value.loading,
+              child: Container(
+                color: Colors.black54,
+              ),
+            );
+          }),
+          Consumer<SearchLocation>(builder: (context, value, child) {
+            return Visibility(
+              visible: value.loading,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          })
         ],
       ),
     );

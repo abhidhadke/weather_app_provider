@@ -6,13 +6,17 @@ import 'api.dart';
 import 'aqi.dart';
 
 
+
+
 class SearchLocation with ChangeNotifier{
 
 String key = api;
 bool _loading = false;
+bool _listLoading = false;
 List _locData = [];
 List get locData => _locData;
 bool get loading => _loading;
+bool get listLoading => _listLoading;
 
 void setLoading(bool value){
   _loading = value;
@@ -21,6 +25,7 @@ void setLoading(bool value){
 
 Future<void> getLoc(String location) async {
   try{
+    _listLoading = true;
     String uri = 'api.openweathermap.org';
     var locUrl = Uri.https(uri,
         '/geo/1.0/direct',
@@ -35,6 +40,7 @@ Future<void> getLoc(String location) async {
     //debugPrint('$cords');
     _locData = cords;
     debugPrint('$_locData');
+    _listLoading = false;
     notifyListeners();
   }catch(e){
     debugPrint('$e');
@@ -84,7 +90,7 @@ class ApiResponse with ChangeNotifier{
   String get aqiDesc => _aqiDesc;
 
 
-  Future<void> getLocation(String latitude, String longitude) async {
+  Future<int> getLocation(String latitude, String longitude) async {
     try{
       String uri = 'api.openweathermap.org';
       var locUrl = Uri.https(uri,
@@ -156,9 +162,14 @@ class ApiResponse with ChangeNotifier{
     _aqi = getAqi(_o3, _pm25, _co);
     _aqiDesc = getAqiDesc(_aqi);
 
+    return 1;
 
-    }catch(e, s){
+    }
+    catch(e, s){
       debugPrint('$e ,\n$s');
+      return 0;
+
+
     }
 
   }

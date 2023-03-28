@@ -26,7 +26,6 @@ class _MyNavPageState extends State<MyNavPage> with SingleTickerProviderStateMix
 
   @override
   void initState() {
-    // TODO: implement initState
     currentPage = 0;
     tabController = TabController(length: 2, vsync: this);
     tabController.animation!.addListener(
@@ -87,7 +86,7 @@ class _MyNavPageState extends State<MyNavPage> with SingleTickerProviderStateMix
           showIcon: false,
           body: (context, controller) => TabBarView(
             controller: tabController,
-            dragStartBehavior: DragStartBehavior.down,
+            dragStartBehavior: DragStartBehavior.start,
             physics: const NeverScrollableScrollPhysics(),
             children: [
              Homepage(timeZone: widget.timezone,),
