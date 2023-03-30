@@ -19,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     determineLocation();
+
   }
 
   Future<void> determineLocation() async {
@@ -39,6 +40,8 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
   }
+
+
 
   _nextScreen(int timezone){
     return Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) =>  MyNavPage(timezone: timezone)));

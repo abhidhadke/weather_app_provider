@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-import 'api.dart';
+import '../constants.dart';
 import 'aqi.dart';
 
 
@@ -122,8 +122,10 @@ class ApiResponse with ChangeNotifier{
     Map mainData = data['main'];
     _temp = mainData['temp'];
     _humidity = mainData['humidity'];
-    _minTemp = mainData['temp_min'];
-    _maxTemp = mainData['temp_max'];
+    _maxTemp = mainData['temp_max'].toDouble();
+    _minTemp = mainData['temp_min'].toDouble();
+
+
 
 
     // getting temp description, icon

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
+import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'package:weather_app_provider/constants.dart';
 import 'package:weather_app_provider/network/api_response.dart';
 import 'package:weather_app_provider/screens/components/appBar.dart';
+import 'package:weather_app_provider/screens/components/interstitial_ad.dart';
 import 'package:weather_app_provider/screens/navigationPage.dart';
 import 'components/changeBG.dart';
-import 'components/interstitial_ad.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -18,49 +18,32 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   TextEditingController controller = TextEditingController();
-  BannerAd? _bannerAd;
   bool isLoading = false;
 
-  void loadAd() {
-    _bannerAd = BannerAd(
-      adUnitId: searchAdId,
-      request: const AdRequest(),
-      size: AdSize.banner,
-      listener: BannerAdListener(
-        // Called when an ad is successfully received.
-        onAdLoaded: (ad) {
-          debugPrint('Ad loaded.');
-        },
-        // Called when an ad request failed.
-        onAdFailedToLoad: (ad, err) {
-          debugPrint('BannerAd failed to load: $err');
-          // Dispose the ad here to free resources.
-          ad.dispose();
-        },
-        // Called when an ad opens an overlay that covers the screen.
-        onAdOpened: (Ad ad) {},
-        // Called when an ad removes an overlay that covers the screen.
-        onAdClosed: (Ad ad) {},
-        // Called when an impression occurs on the ad.
-        onAdImpression: (Ad ad) {},
-      ),
-    )..load();
-  }
+
 
   @override
   void initState() {
-    loadAd();
     super.initState();
     controller.text = '';
     final locProvider = Provider.of<SearchLocation>(context, listen: false);
     locProvider.locData.clear();
   }
 
+
   @override
   void dispose() {
     debugPrint('Disposed search page');
-    _bannerAd?.dispose();
     super.dispose();
+  }
+
+  UnityBannerAd buildUnityBannerSearchAd() {
+    return UnityBannerAd(
+      placementId: searchAdId,
+      onLoad: (placementId) => debugPrint('Banner loaded: $placementId'),
+      onClick: (placementId) => debugPrint('Banner clicked: $placementId'),
+      onFailed: (placementId, error, message) => debugPrint('Banner Ad $placementId failed: $error $message'),
+    );
   }
 
   @override
@@ -93,9 +76,9 @@ class _SearchState extends State<Search> {
                 child: Column(
                   children: [
                     SizedBox(
-                      width: _bannerAd!.size.width.toDouble(),
-                      height: _bannerAd!.size.height.toDouble(),
-                      child: AdWidget(ad: _bannerAd!),
+                      height: buildUnityBannerSearchAd().size.height.toDouble(),
+                      width: buildUnityBannerSearchAd().size.width.toDouble(),
+                      child: buildUnityBannerSearchAd(),
                     ),
                     Padding(
                       padding:
@@ -190,9 +173,8 @@ class _SearchState extends State<Search> {
                                                 .toString());
                                         if (res == 1) {
                                           value.setLoading(false);
-                                          await interstitialAd?.show();
-                                          _pushtoNewScreen(
-                                              newLocation.timezone);
+                                          _pushtoNewScreen(newLocation.timezone);
+                                          await showAdVideo();
                                         } else {
                                           value.setLoading(false);
                                         }

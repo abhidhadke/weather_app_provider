@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
+import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'package:weather_app_provider/network/api_response.dart';
 import 'package:weather_app_provider/screens/splashScreen.dart';
 
@@ -12,9 +12,18 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp
   ]);
-  await MobileAds.instance.initialize();
 
   runApp(const MyApp());
+  await loadUnity();
+}
+
+loadUnity() async {
+  await UnityAds.init(
+    gameId: '5225188',
+    testMode: false,
+    onComplete: () => debugPrint('Initialization Complete'),
+    onFailed: (error, message) => debugPrint('Initialization Failed: $error $message'),
+  );
 }
 
 class MyApp extends StatelessWidget {

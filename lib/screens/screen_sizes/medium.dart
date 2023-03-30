@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -14,12 +13,11 @@ import '../components/changeIcons.dart';
 class AndroidMedium extends StatelessWidget {
   const AndroidMedium({
     super.key,
-    required this.size, required this.bannerAd,
+    required this.size, required this.ad
   });
 
   final Size size;
-  final BannerAd? bannerAd;
-
+  final Widget ad;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,10 +45,7 @@ class AndroidMedium extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: bannerAd!.size.width.toDouble(),
-                          height: bannerAd!.size.height.toDouble(),
-                          child: AdWidget(
-                              ad: bannerAd!),
+                          child: ad,
                         ),
                         Text('${value.city}, ${value.country}', style: city(size.width*0.11), textAlign: TextAlign.center,maxLines: 2, overflow: TextOverflow.ellipsis, softWrap: true,),
                         Consumer<DateProvider>(builder: (context,value,child){
@@ -118,4 +113,6 @@ class AndroidMedium extends StatelessWidget {
       ),
     );
   }
+
+
 }
