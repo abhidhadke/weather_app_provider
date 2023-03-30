@@ -50,7 +50,6 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     final searchProvider = Provider.of<SearchLocation>(context, listen: false);
     final locProvider = Provider.of<ApiResponse>(context, listen: false);
-    debugPrint('build');
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: appBar(size),

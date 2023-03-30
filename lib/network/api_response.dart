@@ -123,6 +123,7 @@ class ApiResponse with ChangeNotifier{
     _temp = mainData['temp'];
     _humidity = mainData['humidity'];
     _maxTemp = mainData['temp_max'].toDouble();
+
     _minTemp = mainData['temp_min'].toDouble();
 
 
@@ -155,9 +156,9 @@ class ApiResponse with ChangeNotifier{
     List innerData = mainAqiData['list'];
     Map lists = innerData[0];
     Map components = lists['components'];
-    _o3 = components['o3'];
-    _pm25 = components['pm2_5'];
-    _co = components['co'];
+    _o3 = components['o3'].toDouble();
+    _pm25 = components['pm2_5'].toDouble();
+    _co = components['co'].toDouble();
     _o3 = _o3*0.510;
     _co = _co*0.000873;
 
